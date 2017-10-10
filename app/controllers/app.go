@@ -12,10 +12,7 @@ type App struct {
 }
 
 func (c App) Root() revel.Result {
-	pages, err := models.GetAllPages()
-	if err != nil {
-		return c.RenderError(err)
-	}
+	pages := models.GetAllPages()
 	c.ViewArgs["pages"] = pages
 	return c.Render()
 }
@@ -29,17 +26,19 @@ func (c App) executeAction(action func(string) revel.Result, title string) revel
 }
 
 func (c App) view(title string) revel.Result {
-	p, err := models.LoadPage(title)
-	if err != nil {
-		return c.Redirect("/edit/" + title)
+	p := models.LoadPage(title)
+	if p == nil {
+		p = &models.Page{Title: title}
+		p.SaveOrUpdate()
+		return c.Redirect("/edit/" + p.Title)
 	}
 	c.ViewArgs["page"] = p
 	return c.Render()
 }
 
 func (c App) edit(title string) revel.Result {
-	p, err := models.LoadPage(title)
-	if err != nil {
+	p := models.LoadPage(title)
+	if p == nil {
 		p = &models.Page{Title: title}
 	}
 	c.ViewArgs["page"] = p
@@ -48,11 +47,12 @@ func (c App) edit(title string) revel.Result {
 
 func (c App) save(title string) revel.Result {
 	body := c.Request.FormValue("body")
-	p := &models.Page{Title: title, Body: []byte(body)}
-	err := p.Save()
-	if err != nil {
-		return c.RenderError(err)
+	p := models.LoadPage(title)
+	if p == nil {
+		p = &models.Page{Title: title}
 	}
+	p.Body = []byte(body)
+	p.SaveOrUpdate()
 	return c.Redirect("/view/" + title)
 }
 

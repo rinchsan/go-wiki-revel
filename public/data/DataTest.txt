@@ -1,2 +1,0 @@
-This is data directory test file.
-I did it.
