@@ -10,7 +10,7 @@ type Page struct {
 	Body  []byte
 }
 
-func (p *Page) save() error {
+func (p *Page) Save() error {
 	filename := p.Title + ".txt"
 	return ioutil.WriteFile("go-wiki-revel/public/data/"+filename, p.Body, 0600)
 }

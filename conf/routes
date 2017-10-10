@@ -7,9 +7,10 @@ module:testrunner
 # module:jobs
 
 
-GET    /                  App.Root
-GET    /view/:filename    App.View
-GET    /edit/:filename    App.Edit
+GET     /                  App.Root
+GET     /view/:filename    App.View
+GET     /edit/:filename    App.Edit
+POST    /save/:filename    App.Save
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

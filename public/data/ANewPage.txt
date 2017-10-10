@@ -1,3 +1,5 @@
 This a new page.
 
 Let's enjoy Golang.
+
+This edit is from revel framework.

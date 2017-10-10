@@ -46,6 +46,16 @@ func (c App) edit(title string) revel.Result {
 	return c.Render()
 }
 
+func (c App) save(title string) revel.Result {
+	body := c.Request.FormValue("body")
+	p := &models.Page{Title: title, Body: []byte(body)}
+	err := p.Save()
+	if err != nil {
+		return c.RenderError(err)
+	}
+	return c.Redirect("/view/" + title)
+}
+
 func (c App) View() revel.Result {
 	title := c.Params.Route.Get("filename")
 	return c.executeAction(c.view, title)
@@ -54,4 +64,9 @@ func (c App) View() revel.Result {
 func (c App) Edit() revel.Result {
 	title := c.Params.Route.Get("filename")
 	return c.executeAction(c.edit, title)
+}
+
+func (c App) Save() revel.Result {
+	title := c.Params.Route.Get("filename")
+	return c.executeAction(c.save, title)
 }
