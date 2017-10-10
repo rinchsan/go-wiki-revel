@@ -1,6 +1,7 @@
 <p>
     [ <a href="/">home</a> ]
 </p>
+{{with .page}}
 <h1>{{.Title}}</h1>
 
 <p>
@@ -10,3 +11,4 @@
 <div>
     {{printf "%s" .Body}}
 </div>
+{{end}}

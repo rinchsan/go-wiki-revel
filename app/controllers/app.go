@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"go-wiki-revel/app/models"
+	"regexp"
 
 	"github.com/revel/revel"
 )
@@ -15,5 +16,28 @@ func (c App) Root() revel.Result {
 	if err != nil {
 		return c.RenderError(err)
 	}
-	return c.Render(pages)
+	c.ViewArgs["pages"] = pages
+	return c.Render()
+}
+
+func (c App) executeAction(action func(string) revel.Result, title string) revel.Result {
+	matched := regexp.MustCompile("^[a-zA-Z0-9]+$").Match([]byte(title))
+	if !matched {
+		return c.NotFound("Invalid title")
+	}
+	return action(title)
+}
+
+func (c App) view(title string) revel.Result {
+	p, err := models.LoadPage(title)
+	if err != nil {
+		return c.Redirect("/edit/" + title)
+	}
+	c.ViewArgs["page"] = p
+	return c.Render()
+}
+
+func (c App) View() revel.Result {
+	title := c.Params.Route.Get("filename")
+	return c.executeAction(c.view, title)
 }
