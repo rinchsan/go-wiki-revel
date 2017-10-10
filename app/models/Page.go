@@ -6,7 +6,8 @@ import (
 )
 
 type Page struct {
-	Title string
+	ID    int64  `gorm:"primary_key"`
+	Title string `sql:"not null"`
 	Body  []byte
 }
 
