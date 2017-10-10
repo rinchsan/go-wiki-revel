@@ -26,17 +26,17 @@ func (c App) executeAction(action func(string) revel.Result, title string) revel
 }
 
 func (c App) view(title string) revel.Result {
-	p, err := models.LoadPage(title)
-	if err != nil {
-		return c.Redirect("/edit/" + title)
+	p := models.LoadPage(title)
+	if p == nil {
+		return c.NotFound("No wiki page")
 	}
 	c.ViewArgs["page"] = p
 	return c.Render()
 }
 
 func (c App) edit(title string) revel.Result {
-	p, err := models.LoadPage(title)
-	if err != nil {
+	p := models.LoadPage(title)
+	if p == nil {
 		p = &models.Page{Title: title}
 	}
 	c.ViewArgs["page"] = p

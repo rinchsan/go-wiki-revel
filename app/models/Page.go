@@ -1,9 +1,5 @@
 package models
 
-import (
-	"io/ioutil"
-)
-
 type Page struct {
 	ID    int64  `gorm:"primary_key"`
 	Title string `sql:"not null"`
@@ -18,13 +14,14 @@ func (p *Page) SaveOrUpdate() {
 	}
 }
 
-func LoadPage(title string) (*Page, error) {
-	filename := "go-wiki-revel/public/data/" + title + ".txt"
-	body, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return nil, err
+func LoadPage(title string) (p *Page) {
+	var pages []*Page
+	DB.Where("title = ?", title).First(&pages)
+	if len(pages) > 0 {
+		return pages[0]
+	} else {
+		return nil
 	}
-	return &Page{Title: title, Body: body}, nil
 }
 
 func GetAllPages() (pages []*Page) {
