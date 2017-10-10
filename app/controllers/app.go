@@ -37,7 +37,21 @@ func (c App) view(title string) revel.Result {
 	return c.Render()
 }
 
+func (c App) edit(title string) revel.Result {
+	p, err := models.LoadPage(title)
+	if err != nil {
+		p = &models.Page{Title: title}
+	}
+	c.ViewArgs["page"] = p
+	return c.Render()
+}
+
 func (c App) View() revel.Result {
 	title := c.Params.Route.Get("filename")
 	return c.executeAction(c.view, title)
+}
+
+func (c App) Edit() revel.Result {
+	title := c.Params.Route.Get("filename")
+	return c.executeAction(c.edit, title)
 }

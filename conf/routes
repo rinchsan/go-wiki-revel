@@ -9,6 +9,7 @@ module:testrunner
 
 GET    /                  App.Root
 GET    /view/:filename    App.View
+GET    /edit/:filename    App.Edit
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
