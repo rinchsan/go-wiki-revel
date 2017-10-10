@@ -28,7 +28,9 @@ func (c App) executeAction(action func(string) revel.Result, title string) revel
 func (c App) view(title string) revel.Result {
 	p := models.LoadPage(title)
 	if p == nil {
-		return c.NotFound("No wiki page")
+		p = &models.Page{Title: title}
+		p.SaveOrUpdate()
+		return c.Redirect("/edit/" + p.Title)
 	}
 	c.ViewArgs["page"] = p
 	return c.Render()
