@@ -57,17 +57,17 @@ func (c App) save(title string) revel.Result {
 }
 
 func (c App) View() revel.Result {
-	title := c.Params.Route.Get("filename")
+	title := c.Params.Route.Get("title")
 	return c.executeAction(c.view, title)
 }
 
 func (c App) Edit() revel.Result {
-	title := c.Params.Route.Get("filename")
+	title := c.Params.Route.Get("title")
 	return c.executeAction(c.edit, title)
 }
 
 func (c App) Save() revel.Result {
-	title := c.Params.Route.Get("filename")
+	title := c.Params.Route.Get("title")
 	return c.executeAction(c.save, title)
 }
 
