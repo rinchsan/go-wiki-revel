@@ -70,3 +70,7 @@ func (c App) Save() revel.Result {
 	title := c.Params.Route.Get("filename")
 	return c.executeAction(c.save, title)
 }
+
+func (c App) NewGet() revel.Result {
+	return c.RenderTemplate("App/new.html")
+}
