@@ -74,3 +74,8 @@ func (c App) Save() revel.Result {
 func (c App) NewGet() revel.Result {
 	return c.RenderTemplate("App/new.html")
 }
+
+func (c App) NewPost() revel.Result {
+	title := c.Request.FormValue("title")
+	return c.Redirect("/view/" + title)
+}

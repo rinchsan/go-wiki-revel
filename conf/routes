@@ -12,6 +12,7 @@ GET     /view/:filename    App.View
 GET     /edit/:filename    App.Edit
 POST    /save/:filename    App.Save
 GET     /new/              App.NewGet
+POST    /new/              App.NewPost
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
