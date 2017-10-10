@@ -12,10 +12,7 @@ type App struct {
 }
 
 func (c App) Root() revel.Result {
-	pages, err := models.GetAllPages()
-	if err != nil {
-		return c.RenderError(err)
-	}
+	pages := models.GetAllPages()
 	c.ViewArgs["pages"] = pages
 	return c.Render()
 }

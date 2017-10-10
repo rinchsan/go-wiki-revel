@@ -2,7 +2,6 @@ package models
 
 import (
 	"io/ioutil"
-	"regexp"
 )
 
 type Page struct {
@@ -28,24 +27,7 @@ func LoadPage(title string) (*Page, error) {
 	return &Page{Title: title, Body: body}, nil
 }
 
-func GetAllPages() ([]*Page, error) {
-	fileInfos, err := ioutil.ReadDir("go-wiki-revel/public/data")
-	if err != nil {
-		return nil, err
-	}
-	var pages []*Page
-	for _, fileInfo := range fileInfos {
-		title := fileInfo.Name()
-		rep, err := regexp.Compile(".txt$")
-		if err != nil {
-			continue
-		}
-		title = rep.ReplaceAllString(title, "")
-		page, err := LoadPage(title)
-		if err != nil {
-			return nil, err
-		}
-		pages = append(pages, page)
-	}
-	return pages, nil
+func GetAllPages() (pages []*Page) {
+	DB.Find(&pages)
+	return
 }
