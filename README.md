@@ -5,7 +5,7 @@
 ## Description
 
 - [go-wiki](https://github.com/snowman-mh/go-wiki)をRevelフレームワークに乗せて作ってみた。
-- [go-wiki](https://github.com/snowman-mh/go-wiki)ではWikiデータをファイル形式で保存したいたが、このリポジトリではデータベースに保存するようにした。
+- [go-wiki](https://github.com/snowman-mh/go-wiki)ではWikiデータをファイル形式で保存していたが、このリポジトリではデータベースに保存するようにした。
   - データベースにはMySQLを採用
   - OR Mapperには[gorm](https://github.com/jinzhu/gorm)を採用
 
@@ -17,6 +17,7 @@ Install libraries.
 $ cd $GOPATH
 $ go get -u github.com/revel/cmd/revel
 $ go get -u github.com/jinzhu/gorm
+$ go get -u github.com/go-sql-driver/mysql
 ```
 
 Create database.
