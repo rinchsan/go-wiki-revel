@@ -49,10 +49,7 @@ func (c App) edit(title string) revel.Result {
 func (c App) save(title string) revel.Result {
 	body := c.Request.FormValue("body")
 	p := &models.Page{Title: title, Body: []byte(body)}
-	err := p.Save()
-	if err != nil {
-		return c.RenderError(err)
-	}
+	p.SaveOrUpdate()
 	return c.Redirect("/view/" + title)
 }
 
