@@ -1,0 +1,11 @@
+<h1>Welcome to go-wiki</h1>
+
+[ <a href="/new">new</a> ]
+
+<ul>
+    {{range .}}
+    <li>
+        <a href="/view/{{.Title}}">{{.Title}}</a>
+    </li>
+    {{end}}
+</ul>
