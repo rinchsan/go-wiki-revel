@@ -18,11 +18,12 @@ func (c App) Root() revel.Result {
 }
 
 func (c App) executeAction(action func(string) revel.Result, title string) revel.Result {
-	matched := regexp.MustCompile("^[a-zA-Z0-9]+$").Match([]byte(title))
-	if !matched {
-		return c.NotFound("Invalid title")
+	rep := regexp.MustCompile("^[a-zA-Z0-9]+$")
+	matched := rep.Match([]byte(title))
+	if matched {
+		return action(title)
 	}
-	return action(title)
+	return c.NotFound("Invalid title")
 }
 
 func (c App) view(title string) revel.Result {
