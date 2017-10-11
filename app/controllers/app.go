@@ -26,10 +26,8 @@ func (c App) executeAction(action func(string) revel.Result, title string) revel
 }
 
 func (c App) view(title string) revel.Result {
-	p := models.LoadPage(title)
-	if p == nil {
-		p = &models.Page{Title: title}
-		p.SaveOrUpdate()
+	p, created := models.LoadOrCreatePage(title)
+	if created {
 		return c.Redirect("/edit/" + p.Title)
 	}
 	c.ViewArgs["page"] = p
@@ -37,22 +35,15 @@ func (c App) view(title string) revel.Result {
 }
 
 func (c App) edit(title string) revel.Result {
-	p := models.LoadPage(title)
-	if p == nil {
-		p = &models.Page{Title: title}
-	}
+	p, _ := models.LoadOrCreatePage(title)
 	c.ViewArgs["page"] = p
 	return c.Render()
 }
 
 func (c App) save(title string) revel.Result {
 	body := c.Request.FormValue("body")
-	p := models.LoadPage(title)
-	if p == nil {
-		p = &models.Page{Title: title}
-	}
-	p.Body = []byte(body)
-	p.SaveOrUpdate()
+	p, _ := models.LoadOrCreatePage(title)
+	p.Update(body)
 	return c.Redirect("/view/" + title)
 }
 

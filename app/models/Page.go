@@ -6,22 +6,26 @@ type Page struct {
 	Body  []byte
 }
 
-func (p *Page) SaveOrUpdate() {
+func (p *Page) create() {
 	if DB.NewRecord(p) {
 		DB.Create(p)
-	} else {
-		DB.Save(p)
 	}
 }
 
-func LoadPage(title string) (p *Page) {
+func (p *Page) Update(body string) {
+	p.Body = []byte(body)
+	DB.Save(p)
+}
+
+func LoadOrCreatePage(title string) (*Page, bool) {
 	var pages []*Page
 	DB.Where("title = ?", title).First(&pages)
 	if len(pages) > 0 {
-		return pages[0]
-	} else {
-		return nil
+		return pages[0], false
 	}
+	p := &Page{Title: title}
+	p.create()
+	return p, true
 }
 
 func GetAllPages() (pages []*Page) {
