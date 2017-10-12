@@ -25,7 +25,7 @@ Create database.
 ```
 $ mysql -u root
 mysql> CREATE DATABASE go_wiki_revel;
-mysqr> exit;
+mysql> exit;
 ```
 
 Clone this repository.
