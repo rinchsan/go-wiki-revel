@@ -31,8 +31,7 @@ mysql> exit;
 Clone this repository.
 
 ```
-$ cd $GOPATH
-$ cd src/
+$ cd $GOPATH/src/
 $ git clone https://github.com/snowman-mh/go-wiki-revel.git
 $ revel run go-wiki-revel
 ```
